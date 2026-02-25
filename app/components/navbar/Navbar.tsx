@@ -2,7 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react';
-import { Infinity, Zap } from 'lucide-react';
+import { ArrowUpRight, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { BorderBeam } from '@/components/ui/border-beam';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -150,10 +152,9 @@ function ProductDropdown() {
             </div>
             <p className="text-[11px] text-zinc-400 leading-relaxed line-clamp-2">{item.description}</p>
           </div>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className="flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity text-zinc-400">
-            <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+
         </a>
+
       ))}
     </div>
   );
@@ -291,6 +292,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null)
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsScrolled(latest > 20);
@@ -392,18 +394,44 @@ export function Navbar() {
 
           {/* Right CTAs */}
           <div className="flex items-center gap-3 flex-shrink-0">
-            <a
-              href="#"
-              className="hidden lg:block text-[12.5px] font-semibold text-[#a8b0c0] hover:text-white transition-colors"
-            >
+            <Button onMouseEnter={() => setHovered("SIGN IN")}
+              onMouseLeave={() => setHovered(null)}
+              className="relative overflow-hidden rounded-full">
               SIGN IN
-            </a>
-            <a
-              href="#"
-              className="hidden lg:flex items-center gap-1.5 bg-[#1E5AF1] hover:bg-[#1a4fd9] text-white px-5 py-2.5 rounded-full text-[12.5px] font-bold tracking-wider transition-all duration-200 transform hover:scale-[1.03] active:scale-95 shadow-[0_0_20px_rgba(30,90,241,0.35)]"
-            >
-              SCHEDULE A DEMO
-            </a>
+              {/* arrow icon */}
+              <ArrowUpRight className="w-4 h-4" />
+              <BorderBeam
+                active={hovered === "SIGN IN"}
+                size={40}
+                borderWidth={2}
+                initialOffset={20}
+                className="from-transparent via-blue-500 to-transparent"
+                transition={{
+                  type: "spring",
+                  stiffness: 30,
+                  damping: 20,
+                }}
+              />
+            </Button>
+            <Button onMouseEnter={() => setHovered("SIGN UP")}
+              onMouseLeave={() => setHovered(null)}
+              className="relative overflow-hidden rounded-full bg-blue-700 hover:bg-blue-900">
+              SIGN UP
+              {/* arrow icon */}
+              <ArrowUpRight className="w-4 h-4" />
+              <BorderBeam
+                active={hovered === "SIGN UP"}
+                size={40}
+                borderWidth={2}
+                initialOffset={20}
+                className="from-transparent via-blue-500 to-transparent"
+                transition={{
+                  type: "spring",
+                  stiffness: 30,
+                  damping: 20,
+                }}
+              />
+            </Button>
 
             {/* Mobile Toggle */}
             <button
