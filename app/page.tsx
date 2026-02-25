@@ -1,5 +1,6 @@
 import { Navbar } from './components/navbar/Navbar';
 import { IntegrationsSection } from './components/integrations/IntegrationsSection';
+// import Navbar from './components/navbar/demo-navbar';
 
 export default function Home() {
   return (
