@@ -1,5 +1,5 @@
 import { Navbar } from './components/navbar/Navbar';
-// import { IntegrationsSection } from './components/integrations/IntegrationsSection';
+import { IntegrationsSection } from './components/integrations/IntegrationsSection';
 
 export default function Home() {
   return (
@@ -37,7 +37,7 @@ export default function Home() {
       </section>
 
       {/* The Domu Integrations Section - light theme */}
-      {/* <IntegrationsSection /> */}
+      <IntegrationsSection />
 
     </main>
   );

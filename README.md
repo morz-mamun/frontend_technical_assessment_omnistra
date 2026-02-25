@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend Technical Assessment: Omnistra
 
-## Getting Started
+This repository contains the implementation of the frontend technical assessment, specifically replicating two distinct sections from given reference websites.
 
-First, run the development server:
+## Live Demo & Usage
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Install dependencies:**
+   The project uses `pnpm`. If you don't have it, install it globally or use npm/yarn equivalents.
+   ```bash
+   pnpm install
+   ```
+2. **Run the development server:**
+   ```bash
+   pnpm dev
+   ```
+3. **Open the browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features Implemented
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Chargeflow.io Navbar
+- **Design:** Floating pill/capsule shape with glassmorphism effects (transparent on top, frosted glass on scroll).
+- **Responsive:** Fully responsive with a hamburger menu and slide-down overlay on mobile/tablet.
+- **Interactions:** Hover dropdowns for main links, smooth scaling animations for CTA buttons.
+- **Tech Used:** Next.js, Tailwind CSS v4, `motion` (Framer Motion).
 
-## Learn More
+### 2. Domu.ai Integrations Section
+- **Design:** Soft blue gradient background with scattered, asymmetric floating integration cards.
+- **Animations:** 
+  - Continuous float/bob effect using slow CSS/Framer keyframes.
+  - Hover states: Scale up and shadow depth changes.
+  - Scroll Parallax: Cards gently shift vertically as you scroll down the page.
+- **Responsive:** Falls back to a clean 3-to-4 column stacked grid on standard mobile and tablet breakpoints.
+- **Tech Used:** Next.js, Tailwind CSS v4, `motion` (Framer Motion) scroll-linked hooks.
 
-To learn more about Next.js, take a look at the following resources:
+## Assumptions & Decisions
+- **Framer Motion Setup:** Used the `motion` (recently renamed from `framer-motion`) package for robust animations and scroll parallax.
+- **UI Libraries:** Implemented bespoke floating components instead of rigid component libraries to achieve pixel-perfect fidelity with the references while keeping the dependency tree small.
+- **Fonts:** Implemented the `Inter` font natively through `next/font/google` to match the geometric sans-serif style used by the reference websites.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Assessment Scope Completed
+- ✅ Pixel-accurate UI replication
+- ✅ Responsive behavior across breakpoints 
+- ✅ Micro-interactions (hovers, dropdowns)
+- ✅ Scroll behavior & parallax animations
+- ✅ Production-ready Tailwind v4 structuring
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Thank you for reviewing!
