@@ -235,18 +235,31 @@ function DropdownContent({ dropdownKey }: { dropdownKey: string }) {
 
 function AnnouncementHeader() {
   const [visible, setVisible] = useState(true);
-  const marqueeText = "ANNOUNCING OUR $35M SERIES A FUNDING TO TAKE DOWN FRIENDLY FRAUD - READ MORE";
+  const marqueeGreenText = "ANNOUNCING OUR $35M SERIES A FUNDING";
+  const marqueeWhiteText = "TO TAKE DOWN FRIENDLY FRAUD - READ MORE"
 
   if (!visible) return null;
   return (
-    <div className="relative overflow-hidden bg-slate-950 py-3 border-b border-slate-800">
+    <div className="relative overflow-hidden bg-slate-950 pt-3">
       <div className="flex animate-scroll whitespace-nowrap gap-8">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="flex items-center gap-2 text-white text-sm font-medium">
-            <span>{marqueeText}</span>
-            <Zap className="w-4 h-4 text-yellow-400 flex-shrink-0" />
-            <Infinity className="w-5 h-5 text-purple-400 flex-shrink-0" />
-          </div>
+          <>
+            <div key={i} className="flex items-center gap-2 text-white text-sm font-medium">
+              <span className='text-[#C3F967]'>{marqueeGreenText}</span><span className='text-white'>{marqueeWhiteText}</span>
+            </div>
+            {/* logo */}
+            <div>
+              <div className="w-5 h-5 flex items-center justify-center shadow-[0_0_12px_rgba(30,90,241,0.5)] group-hover:text-gray-400 transition-all duration-300">
+                <svg width="100%" height="100%" viewBox="0 0 31 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M20.4591 23.996L16.4118 18.3721C16.4118 18.3721 24.1707 12.0345 26.791 6.16874C26.7723 6.14897 17.7054 10.7632 17.7054 10.7632L14.0061 5.62295C20.772 0.983474 24.7214 1.69848 25.7767 3.16527L30.1387 9.22647C31.7551 11.4726 26.029 19.6752 20.4587 23.996H20.4591ZM9.95881 -0.000976563L14.0061 5.62295C14.0061 5.62295 6.24723 11.9605 3.62693 17.8263C3.64561 17.846 12.7126 13.2319 12.7126 13.2319L16.4118 18.3721C9.64591 23.0115 5.69657 22.2965 4.64125 20.8297L0.278806 14.7685C-1.33764 12.5224 4.38893 4.31985 9.95881 -0.000976563Z" fill="currentColor"></path>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <Zap className="w-5 h-5 text-[#C3F967] flex-shrink-0" />
+            </div>
+          </>
+
         ))}
       </div>
     </div>
@@ -314,7 +327,7 @@ export function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 280, damping: 28, delay: 0.1 }}
-        style={{ top: bannerHeight + 12 }}
+        style={isScrolled ? { top: 0 } : { top: bannerHeight + 12 }}
         className="fixed left-1/2 -translate-x-1/2 z-50 container mx-auto"
       >
         <div
@@ -323,7 +336,7 @@ export function Navbar() {
             transition-all transform duration-300 ease-in-out
             ${isScrolled
               ? 'scale-95 xl:scale-90 px-4 py-3 rounded-full bg-[#0a0a0a]/85 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.6)]'
-              : 'scale-100 px-6 py-4 rounded-full bg-transparent'
+              : 'scale-100 pt-1 rounded-full bg-transparent'
             }
           `}
         >
@@ -331,40 +344,28 @@ export function Navbar() {
           <ChargeflowLogo />
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-0.5">
+          <nav className={`hidden lg:flex items-center gap-0.5  backdrop-blur-2xl rounded-full ${isScrolled ? '' : 'border-r border-white/20 bg-[#FFFFFF1A]'}`}>
             {NAV_LINKS?.map((link) => (
               <div
-                key={link.name}
+                key={link?.name}
                 className="relative"
-                onMouseEnter={() => link.hasDropdown && link.dropdownKey ? handleMouseEnter(link.dropdownKey) : undefined}
-                onMouseLeave={link.hasDropdown ? handleMouseLeave : undefined}
+                onMouseEnter={() => link?.hasDropdown && link?.dropdownKey ? handleMouseEnter(link?.dropdownKey) : undefined}
+                onMouseLeave={link?.hasDropdown ? handleMouseLeave : undefined}
               >
                 <button
-                  className={`relative text-[12.5px] font-semibold tracking-wider transition-colors duration-200 flex items-center gap-1 px-3.5 py-2 rounded-full
-                    ${activeDropdown === link.dropdownKey
-                      ? 'text-white bg-white/8'
-                      : 'text-[#a8b0c0] hover:text-white hover:bg-white/5'
+                  className={`relative text-[12.5px] font-semibold tracking-wider transition-colors duration-200 flex items-center gap-1 px-3.5 py-2 rounded-full cursor-pointer
+                    ${activeDropdown === link?.dropdownKey
+                      ? 'text-white'
+                      : 'text-[#a8b0c0] hover:text-white'
                     }`}
                 >
-                  {link.name.toUpperCase()}
-                  {link.hasDropdown && (
-                    <svg
-                      width="10"
-                      height="10"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className={`transition-transform duration-200 ${activeDropdown === link.dropdownKey ? 'rotate-180 text-blue-400' : 'text-zinc-500'
-                        }`}
-                    >
-                      <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )}
+                  {link?.name?.toUpperCase()}
                 </button>
 
                 {/* Dropdown */}
-                {link.hasDropdown && link.dropdownKey && (
+                {link?.hasDropdown && link?.dropdownKey && (
                   <AnimatePresence>
-                    {activeDropdown === link.dropdownKey && (
+                    {activeDropdown === link?.dropdownKey && (
                       <motion.div
                         initial={{ opacity: 0, y: 8, scale: 0.96 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
