@@ -23,7 +23,7 @@ const PRODUCT_ITEMS = [
     title: 'Prevent',
     description: 'Stop friendly fraud, block digital shoplifters & prevent the next chargeback before it happens.',
     href: '#',
-    image: '/product01.png',
+    image: '/product/product01.png',
   },
   {
     badge: null,
@@ -31,7 +31,7 @@ const PRODUCT_ITEMS = [
     title: 'Automation',
     description: 'Fully automated chargeback recovery with 4x ROI guarantee.',
     href: '#',
-    image: '/product02.png',
+    image: '/product/product02.png',
     button: 'LEARN MORE'
   },
   {
@@ -40,7 +40,7 @@ const PRODUCT_ITEMS = [
     title: 'Alerts',
     description: 'Cut 90% of chargebacks before they happen, powered by Visa and Mastercard.',
     href: '#',
-    image: '/product03.png'
+    image: '/product/product03.png'
   },
   {
     badge: 'FREE',
@@ -48,7 +48,7 @@ const PRODUCT_ITEMS = [
     title: 'Insights',
     description: "Get a bird's-eye view into your payments and chargebacks, all in a single, powerful dashboard.",
     href: '#',
-    image: '/product04.png'
+    image: '/product/product04.png'
   },
   {
     badge: 'FOR PLATFORMS',
@@ -56,28 +56,76 @@ const PRODUCT_ITEMS = [
     title: 'Connect',
     description: 'Integrate Chargeflow into your platform, either via Embedding, Whitelabel or API.',
     href: '#',
-    image: '/product05.png'
+    image: '/product/product05.png'
   },
 ];
 
 const CUSTOMERS_ITEMS = [
   {
+    key: 'all',
     title: 'All Case Studies',
-    description: 'See how leading brands use Chargeflow to win back revenue.',
+    // description: 'See how leading brands use Chargeflow to win back revenue.',
     href: '#',
-    isHighlighted: true,
+    image: '/customer/customer01.svg',
+    isWide: true,
   },
-  { title: 'eCommerce', href: '#', logo: 'OBV' },
-  { title: 'SaaS', href: '#', logo: 'ELM' },
-  { title: 'Marketplace', href: '#', logo: 'MKT' },
-  { title: 'Travel', href: '#', logo: 'TRV' },
+  {
+    key: 'ecommerce',
+    brand: 'obvi.',
+    category: 'eCommerce',
+    href: '#',
+    image: '/customer/customer02.svg',
+  },
+  {
+    key: 'saas',
+    brand: 'elementor',
+    category: 'SaaS',
+    href: '#',
+    image: '/customer/customer03.avif',
+  },
+  {
+    key: 'marketplace',
+    brand: 'Fanatics',
+    category: 'Marketplace',
+    href: '#',
+    image: '/customer/customer04.svg',
+  },
+  {
+    key: 'travel',
+    brand: 'HEXCLAD',
+    category: 'Travel',
+    href: '#',
+    image: '/customer/customer05.avif',
+  },
 ];
 
 const INTEGRATIONS_ITEMS = [
-  { title: 'All Integrations', href: '#' },
-  { title: 'Stripe', href: '#' },
-  { title: 'Shopify', href: '#' },
-  { title: 'WooCommerce', href: '#' },
+  {
+    key: 'all',
+    title: 'All Integrations',
+    href: '#',
+    image: '/integration/integration01.svg',
+    isWide: true,
+    isBanner: true,
+  },
+  {
+    key: 'stripe',
+    title: 'Stripe',
+    href: '#',
+    image: '/integration/integration02.avif',
+  },
+  {
+    key: 'shopify',
+    title: 'Shopify',
+    href: '#',
+    image: '/integration/integration03.svg',
+  },
+  {
+    key: 'woocommerce',
+    title: 'WooCommerce',
+    href: '#',
+    image: '/integration/integration04.svg',
+  },
 ];
 
 const RESOURCES_ITEMS = [
@@ -110,12 +158,12 @@ const NAV_LINKS: NavLink[] = [
 
 function ProductDropdown() {
   return (
-    <div className="flex pb-3 gap-3">
+    <div className="flex pb-3 gap-3 w-full">
       {PRODUCT_ITEMS.map((item) => (
         <a
           key={item.title}
           href={item.href}
-          className="relative w-[260px] h-[350px] rounded-[20px] bg-[#1A1A1A] overflow-hidden group hover:border-white/10 transition-colors flex flex-col shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
+          className="relative flex-1 h-[350px] rounded-[20px] bg-black/80 overflow-hidden group hover:bg-[#1A1A1A] hover:transition-all hover:duration-300 transition-colors flex flex-col shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
         >
           {/* Background Image Container */}
           <div className="absolute inset-0 z-0 flex items-center justify-center pt-16">
@@ -123,7 +171,7 @@ function ProductDropdown() {
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover object-bottom opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+                className="w-full h-full object-cover object-bottom opacity-100 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
               />
             )}
           </div>
@@ -162,36 +210,137 @@ function ProductDropdown() {
 
 function CustomersDropdown() {
   return (
-    <div className="w-[320px] p-3 flex flex-col gap-1">
-      <a
-        href="#"
-        className="flex items-start gap-3 px-3 py-3 rounded-xl hover:bg-white/5 transition-colors group border border-white/5 mb-1 bg-white/[0.02]"
-      >
-        <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-blue-400">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <div>
-          <div className="text-[13px] font-semibold text-white group-hover:text-blue-400 transition-colors">All Case Studies</div>
-          <div className="text-[11px] text-zinc-400 mt-0.5">See how leading brands use Chargeflow</div>
-        </div>
-      </a>
-      <div className="px-1 mb-1">
-        <div className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest px-2 mb-2">By Industry</div>
-        {[
-          { industry: 'eCommerce', brand: 'Obvi' },
-          { industry: 'SaaS', brand: 'Elementor' },
-          { industry: 'Marketplace', brand: 'Fanatics' },
-          { industry: 'Travel', brand: 'HexClad' },
-        ].map((item) => (
+    <div className="flex pb-3 gap-3 w-full">
+      {CUSTOMERS_ITEMS?.map((item) => {
+        const isWide = 'isWide' in item && item.isWide;
+        return (
           <a
-            key={item.industry}
-            href="#"
-            className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors group"
+            key={item.key}
+            href={item.href}
+            className={`relative ${isWide ? 'flex-[1.8]' : 'flex-[1]'} h-[350px] rounded-[20px] bg-black/80 hover:bg-[#1A1A1A] hover:transition-all hover:duration-300 overflow-hidden group hover:border-white/10 transition-colors flex flex-col shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]`}
           >
-            <span className="text-[13px] font-medium text-zinc-300 group-hover:text-white transition-colors">{item.industry}</span>
-            <span className="text-[11px] text-zinc-500 group-hover:text-zinc-400 transition-colors">{item.brand} →</span>
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0 flex items-center justify-center">
+              <img
+                src={item.image}
+                alt={'brand' in item ? item.brand : item.title}
+                className="w-full h-full object-contain object-bottom opacity-100 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+              />
+            </div>
+
+            {/* Gradient overlay on top */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#111111] via-[rgba(17,17,17,0.6)] to-transparent z-0 h-32 pointer-events-none" />
+
+            {/* Content */}
+            <div className="relative z-10 p-5 flex flex-col h-full">
+              {isWide ? (
+                /* Wide card: All Case Studies */
+                <>
+                  <span className="text-[17px] font-semibold text-white group-hover:text-blue-400 transition-colors">
+                    {(item as typeof CUSTOMERS_ITEMS[0]).title}
+                  </span>
+                  <div className="mt-auto self-end">
+                    <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
+                      LEARN MORE
+                    </span>
+                  </div>
+                </>
+              ) : (
+                /* Brand stat card */
+                <>
+                  {'brand' in item && (
+                    <div>
+                      {/* brand icon */}
+                      <span></span>
+                      <span className="text-base font-bold text-white tracking-tight">
+                        {item.brand}
+                      </span>
+                    </div>
+                  )}
+                  {/* <div className="mt-auto">
+                    {'stat' in item && (
+                      <div className="mb-1">
+                        <span className="text-[42px] font-bold text-white leading-none">
+                          {item.stat}
+                        </span>
+                        {'statSuffix' in item && item.statSuffix && (
+                          <span className="text-[20px] font-semibold text-zinc-300 ml-1">{item.statSuffix}</span>
+                        )}
+                      </div>
+                    )}
+                    {'statLabel' in item && (
+                      <p className="text-[12px] text-zinc-400 leading-snug mb-3">{item.statLabel}</p>
+                    )}
+                    {'category' in item && (
+                      <span className="text-[10px] text-zinc-500 uppercase tracking-widest">{item.category}</span>
+                    )}
+                  </div> */}
+                </>
+              )}
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Integrations Dropdown ───────────────────────────────────────────────────────
+
+function IntegrationsDropdown() {
+  const banner = INTEGRATIONS_ITEMS.find(i => 'isBanner' in i && i.isBanner);
+  const rows = INTEGRATIONS_ITEMS.filter(i => !('isBanner' in i && i.isBanner));
+
+  return (
+    <div className="flex pb-3 gap-3 w-full">
+      {/* Banner */}
+      {banner && (
+        <a
+          href={banner.href}
+          className="relative flex-1 h-[350px] rounded-[20px] bg-black/80 hover:bg-[#1A1A1A] hover:transition-all hover:duration-300 overflow-hidden group hover:border-white/10 transition-colors flex flex-col shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
+        >
+          <div className="absolute inset-0 z-0 flex items-center justify-center">
+            <img
+              src={banner.image}
+              alt={banner.title}
+              className="w-full h-full object-contain object-bottom opacity-100 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#111111] via-[rgba(17,17,17,0.6)] to-transparent z-0 h-32 pointer-events-none" />
+          <div className="relative z-10 p-5 flex flex-col h-full">
+            <span className="text-[17px] font-semibold text-white group-hover:text-blue-400 transition-colors">
+              {banner.title}
+            </span>
+            <div className="mt-auto self-end">
+              <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
+                EXPLORE
+              </span>
+            </div>
+          </div>
+        </a>
+      )}
+
+      {/* Rows */}
+      <div className="flex flex-col gap-3 flex-1">
+        {rows.map(item => (
+          <a
+            key={item.key}
+            href={item.href}
+            className="relative flex-1 rounded-[20px] bg-black/80 hover:bg-[#1A1A1A] hover:transition-all hover:duration-300 overflow-hidden group hover:border-white/10 transition-colors flex flex-col justify-center shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
+          >
+            <div className="absolute inset-0 z-0 flex items-center justify-center">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+              />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#111111] via-[#111111]/70 to-transparent z-0 pointer-events-none" />
+            <div className="relative z-10 px-5 flex items-center h-full">
+              <span className="text-[17px] font-semibold text-white group-hover:text-blue-400 transition-colors">
+                {item.title}
+              </span>
+            </div>
           </a>
         ))}
       </div>
@@ -203,12 +352,12 @@ function CustomersDropdown() {
 
 function SimpleDropdown({ items }: { items: { title: string; href: string }[] }) {
   return (
-    <div className="w-[200px] p-2 flex flex-col gap-0.5">
+    <div className="w-full p-4 grid grid-cols-2 lg:grid-cols-3 gap-2">
       {items.map((item) => (
         <a
           key={item.title}
           href={item.href}
-          className="px-3 py-2.5 rounded-xl text-[13px] font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
+          className="px-4 py-3 rounded-xl text-[14px] font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
         >
           {item.title}
         </a>
@@ -223,7 +372,7 @@ function DropdownContent({ dropdownKey }: { dropdownKey: string }) {
   switch (dropdownKey) {
     case 'product': return <ProductDropdown />;
     case 'customers': return <CustomersDropdown />;
-    case 'integrations': return <SimpleDropdown items={INTEGRATIONS_ITEMS} />;
+    case 'integrations': return <IntegrationsDropdown />;
     case 'resources': return <SimpleDropdown items={RESOURCES_ITEMS} />;
     case 'company': return <SimpleDropdown items={COMPANY_ITEMS} />;
     default: return null;
@@ -447,7 +596,7 @@ export function Navbar() {
               onMouseEnter={() => handleMouseEnter(activeDropdown)}
               onMouseLeave={handleMouseLeave}
             >
-              <div className="bg-linear-to-t from-white/10 via-white/5 to-black/10 backdrop-blur-5xl rounded-2xl overflow-hidden relative">
+              <div className="w-[1142px] bg-linear-to-t from-white/7 via-white/5 to-black/10 backdrop-blur-5xl rounded-2xl overflow-hidden relative">
                 <DropdownContent dropdownKey={activeDropdown} />
               </div>
             </motion.div>
@@ -528,14 +677,15 @@ export function Navbar() {
                                 )}
                               </a>
                             ))}
-                            {link.dropdownKey === 'customers' && (
-                              <>
-                                <a href="#" className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">All Case Studies</a>
-                                {['eCommerce', 'SaaS', 'Marketplace', 'Travel'].map(i => (
-                                  <a key={i} href="#" className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">{i}</a>
-                                ))}
-                              </>
-                            )}
+                            {link.dropdownKey === 'customers' && CUSTOMERS_ITEMS.map(i => (
+                              <a
+                                key={i.key}
+                                href={i.href}
+                                className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors"
+                              >
+                                {'brand' in i ? i.brand : i.title}
+                              </a>
+                            ))}
                             {link.dropdownKey === 'integrations' && INTEGRATIONS_ITEMS.map(i => (
                               <a key={i.title} href={i.href} className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">{i.title}</a>
                             ))}
