@@ -38,7 +38,6 @@ export default function Home() {
 
       {/* The Domu Integrations Section - light theme */}
       <IntegrationsSection />
-
     </main>
   );
 }

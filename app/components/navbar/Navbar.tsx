@@ -56,7 +56,7 @@ const PRODUCT_ITEMS = [
     title: 'Connect',
     description: 'Integrate Chargeflow into your platform, either via Embedding, Whitelabel or API.',
     href: '#',
-    image: '/product04.png'
+    image: '/product05.png'
   },
 ];
 
@@ -110,12 +110,12 @@ const NAV_LINKS: NavLink[] = [
 
 function ProductDropdown() {
   return (
-    <div className="flex p-3 gap-3">
+    <div className="flex pb-3 gap-3">
       {PRODUCT_ITEMS.map((item) => (
         <a
           key={item.title}
           href={item.href}
-          className="relative w-[220px] h-[300px] rounded-[20px] bg-[#111111] border border-white/5 overflow-hidden group hover:border-white/10 transition-colors flex flex-col"
+          className="relative w-[260px] h-[350px] rounded-[20px] bg-[#1A1A1A] overflow-hidden group hover:border-white/10 transition-colors flex flex-col shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
         >
           {/* Background Image Container */}
           <div className="absolute inset-0 z-0 flex items-center justify-center pt-16">
@@ -147,11 +147,9 @@ function ProductDropdown() {
             </p>
 
             <div className="mt-auto self-end">
-              {item.button && (
-                <span className="bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-colors">
-                  {item.button}
-                </span>
-              )}
+              <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
+                LEARN MORE
+              </span>
             </div>
           </div>
         </a>
@@ -332,18 +330,25 @@ export function Navbar() {
         style={isScrolled ? { top: 0 } : { top: bannerHeight + 12 }}
         className="fixed left-1/2 -translate-x-1/2 z-50 container mx-auto"
       >
-        <div
+        <motion.div
+          animate={{
+            scale: isScrolled ? 0.90 : 1,
+          }}
+          transition={{ duration: 0.3 }}
           className={`
-            flex items-center justify-between
-            transition-all transform duration-300 ease-in-out px-4 py-3
-             max-w-7xl mx-auto w-full
-          `}
+    flex items-center justify-between
+    px-5 py-3 rounded-full
+    ${isScrolled
+              ? 'bg-[#0a0a0a]/85 backdrop-blur-2xl border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.6)]'
+              : 'bg-transparent border-transparent'
+            }
+  `}
         >
           {/* Logo */}
           <ChargeflowLogo />
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-0.5 backdrop-blur-md rounded-full border border-white/10 bg-[#161616]/80 px-4 py-1.5 shadow-2xl">
+          <nav className={`hidden lg:flex items-center gap-0.5 backdrop-blur-md rounded-full px-4 py-1.5 shadow-2xl ${isScrolled ? '' : 'border border-white/10 bg-[#161616]/80'}`}>
             {NAV_LINKS?.map((link) => (
               <div
                 key={link?.name}
@@ -352,7 +357,7 @@ export function Navbar() {
                 onMouseLeave={link?.hasDropdown ? handleMouseLeave : undefined}
               >
                 <button
-                  className={`relative text-[12.5px] font-semibold tracking-wider transition-colors duration-200 flex items-center gap-1 px-3.5 py-2 rounded-full cursor-pointer
+                  className={`relative text-sm font-semibold tracking-wider transition-colors duration-200 flex items-center gap-1 px-3.5 py-2 rounded-full cursor-pointer
                     ${activeDropdown === link?.dropdownKey
                       ? 'text-white'
                       : 'text-[#a8b0c0] hover:text-white'
@@ -428,7 +433,7 @@ export function Navbar() {
               />
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Global Dropdown Container Area */}
         <AnimatePresence>
@@ -442,8 +447,7 @@ export function Navbar() {
               onMouseEnter={() => handleMouseEnter(activeDropdown)}
               onMouseLeave={handleMouseLeave}
             >
-              <div className="bg-[#0f0f11]/95 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_30px_80px_rgba(0,0,0,0.8)] overflow-hidden relative">
-                <div className="h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent absolute top-0 left-0 right-0" />
+              <div className="bg-linear-to-t from-white/10 via-white/5 to-black/10 backdrop-blur-5xl rounded-2xl overflow-hidden relative">
                 <DropdownContent dropdownKey={activeDropdown} />
               </div>
             </motion.div>
