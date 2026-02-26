@@ -19,63 +19,44 @@ interface NavLink {
 const PRODUCT_ITEMS = [
   {
     badge: 'NEW',
-    badgeColor: 'bg-blue-500 text-white',
+    badgeColor: 'bg-white text-black text-[9px] px-2 py-0.5 rounded-full font-bold uppercase',
     title: 'Prevent',
     description: 'Stop friendly fraud, block digital shoplifters & prevent the next chargeback before it happens.',
     href: '#',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-blue-500">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/product01.png',
   },
   {
     badge: null,
+    badgeColor: '',
     title: 'Automation',
     description: 'Fully automated chargeback recovery with 4x ROI guarantee.',
     href: '#',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-blue-500">
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/product02.png',
+    button: 'LEARN MORE'
   },
   {
     badge: null,
+    badgeColor: '',
     title: 'Alerts',
-    description: 'Prevent 90% of chargebacks before they happen, powered by Visa and Mastercard.',
+    description: 'Cut 90% of chargebacks before they happen, powered by Visa and Mastercard.',
     href: '#',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-blue-500">
-        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/product03.png'
   },
   {
     badge: 'FREE',
-    badgeColor: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    badgeColor: 'bg-[#1D1D1F] text-zinc-300 border border-white/10 text-[9px] px-2 py-0.5 rounded-full font-bold uppercase',
     title: 'Insights',
     description: "Get a bird's-eye view into your payments and chargebacks, all in a single, powerful dashboard.",
     href: '#',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-blue-500">
-        <path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/product04.png'
   },
   {
     badge: 'FOR PLATFORMS',
-    badgeColor: 'bg-violet-500/20 text-violet-400 border border-violet-500/30',
+    badgeColor: 'bg-[#1D1D1F] text-zinc-300 border border-white/10 text-[9px] px-2 py-0.5 rounded-full font-bold uppercase',
     title: 'Connect',
     description: 'Integrate Chargeflow into your platform, either via Embedding, Whitelabel or API.',
     href: '#',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-blue-500">
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    image: '/product04.png'
   },
 ];
 
@@ -129,32 +110,51 @@ const NAV_LINKS: NavLink[] = [
 
 function ProductDropdown() {
   return (
-    <div className="w-[520px] p-3 grid grid-cols-1 gap-1">
+    <div className="flex p-3 gap-3">
       {PRODUCT_ITEMS.map((item) => (
         <a
           key={item.title}
           href={item.href}
-          className="flex items-start gap-3 px-3 py-3 rounded-xl hover:bg-white/5 transition-colors group"
+          className="relative w-[220px] h-[300px] rounded-[20px] bg-[#111111] border border-white/5 overflow-hidden group hover:border-white/10 transition-colors flex flex-col"
         >
-          <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mt-0.5">
-            {item.icon}
+          {/* Background Image Container */}
+          <div className="absolute inset-0 z-0 flex items-center justify-center pt-16">
+            {item.image && (
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover object-bottom opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+              />
+            )}
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-[13px] font-semibold text-white group-hover:text-blue-400 transition-colors">
+
+          <div className="absolute inset-0 bg-gradient-to-b from-[#111111] via-[rgba(17,17,17,0.6)] to-transparent z-0 h-32 pointer-events-none" />
+
+          {/* Content */}
+          <div className="relative z-10 p-5 flex flex-col h-full hover:cursor-pointer">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[17px] font-medium text-white group-hover:text-blue-400 transition-colors">
                 {item.title}
               </span>
               {item.badge && (
-                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${item.badgeColor}`}>
+                <span className={item.badgeColor}>
                   {item.badge}
                 </span>
               )}
             </div>
-            <p className="text-[11px] text-zinc-400 leading-relaxed line-clamp-2">{item.description}</p>
+            <p className="text-[14px] text-zinc-400 leading-snug">
+              {item.description}
+            </p>
+
+            <div className="mt-auto self-end">
+              {item.button && (
+                <span className="bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-colors">
+                  {item.button}
+                </span>
+              )}
+            </div>
           </div>
-
         </a>
-
       ))}
     </div>
   );
@@ -377,8 +377,8 @@ export function Navbar() {
                         onMouseLeave={handleMouseLeave}
                         className={`absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0f0f11]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] overflow-hidden z-50`}
                         style={{
-                          // Product dropdown is wider — shift it leftward
-                          ...(link.dropdownKey === 'product' ? { left: '-80px', transform: 'none' } : {}),
+                          // Product dropdown is wider — shift it over slightly so it clears the left edge
+                          ...(link.dropdownKey === 'product' ? { left: '-200px', transform: 'none' } : {}),
                         }}
                       >
                         {/* Dropdown inner top accent line */}
@@ -515,7 +515,7 @@ export function Navbar() {
                               >
                                 <span className="text-[13px] font-medium text-zinc-300 group-hover:text-white transition-colors">{item.title}</span>
                                 {item.badge && (
-                                  <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${item.badgeColor}`}>{item.badge}</span>
+                                  <span className={item.badgeColor}>{item.badge}</span>
                                 )}
                               </a>
                             ))}
