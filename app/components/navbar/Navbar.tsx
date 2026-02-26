@@ -335,18 +335,15 @@ export function Navbar() {
         <div
           className={`
             flex items-center justify-between
-            transition-all transform duration-300 ease-in-out
-            ${isScrolled
-              ? 'scale-95 xl:scale-90 px-4 py-3 rounded-full bg-[#0a0a0a]/85 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.6)]'
-              : 'scale-100 pt-1 rounded-full bg-transparent'
-            }
+            transition-all transform duration-300 ease-in-out px-4 py-3
+             max-w-7xl mx-auto w-full
           `}
         >
           {/* Logo */}
           <ChargeflowLogo />
 
           {/* Desktop Nav */}
-          <nav className={`hidden lg:flex items-center gap-0.5  backdrop-blur-2xl rounded-full ${isScrolled ? '' : 'border-r border-white/20 bg-[#FFFFFF1A]'}`}>
+          <nav className="hidden lg:flex items-center gap-0.5 backdrop-blur-md rounded-full border border-white/10 bg-[#161616]/80 px-4 py-1.5 shadow-2xl">
             {NAV_LINKS?.map((link) => (
               <div
                 key={link?.name}
@@ -363,31 +360,6 @@ export function Navbar() {
                 >
                   {link?.name?.toUpperCase()}
                 </button>
-
-                {/* Dropdown */}
-                {link?.hasDropdown && link?.dropdownKey && (
-                  <AnimatePresence>
-                    {activeDropdown === link?.dropdownKey && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 4, scale: 0.96 }}
-                        transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                        onMouseEnter={() => handleMouseEnter(link.dropdownKey!)}
-                        onMouseLeave={handleMouseLeave}
-                        className={`absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-[#0f0f11]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] overflow-hidden z-50`}
-                        style={{
-                          // Product dropdown is wider — shift it over slightly so it clears the left edge
-                          ...(link.dropdownKey === 'product' ? { left: '-200px', transform: 'none' } : {}),
-                        }}
-                      >
-                        {/* Dropdown inner top accent line */}
-                        <div className="h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-                        <DropdownContent dropdownKey={link.dropdownKey} />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
               </div>
             ))}
           </nav>
@@ -457,7 +429,40 @@ export function Navbar() {
             </button>
           </div>
         </div>
+
+        {/* Global Dropdown Container Area */}
+        <AnimatePresence>
+          {activeDropdown && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute top-[80px] left-0 right-0 flex justify-center z-50"
+              onMouseEnter={() => handleMouseEnter(activeDropdown)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="bg-[#0f0f11]/95 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_30px_80px_rgba(0,0,0,0.8)] overflow-hidden relative">
+                <div className="h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent absolute top-0 left-0 right-0" />
+                <DropdownContent dropdownKey={activeDropdown} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.header>
+
+      {/* Background Dim/Blur Overlay when Menu Active */}
+      <AnimatePresence>
+        {activeDropdown && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/40 backdrop-blur-[6px] z-40 pointer-events-none"
+          />
+        )}
+      </AnimatePresence>
 
       {/* Mobile Menu */}
       <AnimatePresence>

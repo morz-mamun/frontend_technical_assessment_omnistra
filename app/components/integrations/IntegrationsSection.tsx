@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'motion/react';
-import React from 'react';
 import { IntegrationCard } from './IntegrationCard';
 import { INTEGRATIONS } from './IntegrationLogos';
 
