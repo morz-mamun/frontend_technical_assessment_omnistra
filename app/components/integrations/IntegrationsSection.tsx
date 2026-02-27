@@ -10,6 +10,8 @@ import {
 } from "motion/react";
 import { Cloud, Share2, RefreshCw, Zap } from "lucide-react";
 
+
+
 // x/y = percent position from top-left (card is centered on this point)
 const NODES = [
     {
@@ -94,7 +96,7 @@ function IntegrationNode({
     // 0.00–0.15 : fade in
     // 0.15–0.65 : fly to center
     // 0.65–0.85 : shrink + fade (merge)
-    const opacity = useTransform(smooth, [0, 0.12, 0.62, 0.82], [0, 1, 1, 0]);
+    const opacity = useTransform(smooth, [0, 0.12, 0.62, 0.82], [1, 1, 1, 0]);
     const scale = useTransform(smooth, [0.12, 0.60, 0.82], [1, 1.05, 0.08]);
     const x = useTransform(smooth, [0.15, 0.66], ["0vw", `${offsetX * 0.9}vw`]);
     const y = useTransform(smooth, [0.15, 0.66], ["0vh", `${offsetY * 0.9}vh`]);
@@ -118,18 +120,6 @@ function IntegrationNode({
     );
 }
 
-function RippleRing({ smooth, offset }: { smooth: MotionValue<number>; offset: number }) {
-    const s = 0.82 + offset;
-    const opacity = useTransform(smooth, [s, s + 0.05, s + 0.15], [0, 0.65, 0]);
-    const scale = useTransform(smooth, [s, s + 0.15], [1, 4.5]);
-    return (
-        <motion.div
-            style={{ scale, opacity }}
-            className="absolute w-28 h-28 rounded-3xl border-[1.5px] border-[#1E5AF1] pointer-events-none"
-        />
-    );
-}
-
 // ─── Section — only 200vh so full animation fits in ~1 viewport of scrolling ──
 
 export default function IntegrationsSection() {
@@ -143,8 +133,8 @@ export default function IntegrationsSection() {
     // Tight spring so motion closely tracks scroll
     const smooth = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-    const headlineOpacity = useTransform(smooth, [0, 0.08, 0.28], [1, 1, 0]);
-    const headlineY = useTransform(smooth, [0.08, 0.28], ["0px", "-18px"]);
+    const headlineOpacity = useTransform(smooth, [0, 0.08, 0.62, 0.80], [1, 1, 1, 0]);
+    const headlineY = useTransform(smooth, [0.62, 0.80], ["0px", "-18px"]);
 
     const mergedOpacity = useTransform(smooth, [0.78, 0.88], [0, 1]);
     const mergedScale = useTransform(smooth, [0.78, 0.90], [0.3, 1]);
@@ -157,10 +147,10 @@ export default function IntegrationsSection() {
             className="relative bg-[#F8FAFF]"
             style={{ height: "200vh" }}   // ← 200vh = exactly one viewport of scrolling
         >
-            <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+            <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden container mx-auto">
 
                 {/* Bloom */}
-                <motion.div style={{ opacity: bgGlow }} className="absolute inset-0 pointer-events-none" aria-hidden>
+                <motion.div style={{ opacity: bgGlow }} className="absolute inset-0" aria-hidden>
                     <div
                         className="w-full h-full"
                         style={{ background: "radial-gradient(ellipse 40% 40% at 50% 50%, rgba(30,90,241,0.13) 0%, transparent 70%)" }}
@@ -168,27 +158,43 @@ export default function IntegrationsSection() {
                 </motion.div>
 
                 {/* Flash */}
-                <motion.div style={{ opacity: bgFlash }} className="absolute inset-0 bg-white pointer-events-none z-40" aria-hidden />
+                <motion.div style={{ opacity: bgFlash }} className="absolute inset-0 bg-white z-40" aria-hidden />
 
                 {/* Headline */}
                 <motion.div
                     style={{ opacity: headlineOpacity, y: headlineY }}
-                    className="relative z-20 text-center select-none pointer-events-none"
+                    className="relative z-50 text-center space-y-4"
                 >
-                    <p className="text-[#1E5AF1] text-xs font-bold tracking-[0.25em] uppercase mb-3">
-                        Integrations
-                    </p>
                     <h2 className="text-[#0B1528] font-semibold text-5xl tracking-tight leading-tight">
                         One platform,<br />unlimited integrations
                     </h2>
-                    <p className="mt-4 text-[#64748B] text-lg max-w-sm mx-auto">
-                        Connect every tool your team already loves.
-                    </p>
+                    {/* button  */}
+                    <button
+                        className="group inline-flex items-center gap-3 bg-blue-600 text-white rounded-lg px-5 py-3 font-sans text-sm border-none relative overflow-hidden hover:ring-1 hover:ring-blue-600 pointer-events-auto cursor-pointer"
+                    >
+                        {/* White fill sliding from left */}
+                        <span className="absolute inset-0 bg-white translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out group-hover:ring-1 group-hover:ring-blue-600" />
+
+                        {/* Text — switches color on hover */}
+                        <span className="relative z-10 text-white group-hover:text-blue-600 transition-colors duration-500">
+                            View all integrations
+                        </span>
+
+                        {/* Icon circle */}
+                        <span className="relative z-10 inline-flex items-center justify-center w-6 h-6 bg-white group-hover:bg-blue-600 rounded-full flex-shrink-0 transition-colors duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14">
+                                <path
+                                    d="M 5.727 11.06 L 8.78 8 L 5.727 4.94 L 6.667 4 L 10.667 8 L 6.667 12 Z"
+                                    className="fill-blue-600 group-hover:fill-white transition-colors duration-500"
+                                />
+                            </svg>
+                        </span>
+                    </button>
                 </motion.div>
 
                 {/* Nodes */}
-                <div className="absolute inset-0 z-10">
-                    {NODES.map((node) => (
+                <div className="absolute inset-0 z-50 pointer-events-none">
+                    {NODES?.map((node) => (
                         <IntegrationNode key={node.id} node={node} smooth={smooth} />
                     ))}
                 </div>
@@ -204,13 +210,8 @@ export default function IntegrationsSection() {
                 >
                     <Zap size={52} className="text-white" fill="white" />
                 </motion.div>
-
-                {/* Ripples */}
-                <RippleRing smooth={smooth} offset={0} />
-                <RippleRing smooth={smooth} offset={0.04} />
-                <RippleRing smooth={smooth} offset={0.08} />
-
             </div>
         </section>
     );
 }
+
