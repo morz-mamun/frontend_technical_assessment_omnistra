@@ -103,6 +103,7 @@ const INTEGRATIONS_ITEMS = [
   {
     key: 'all',
     title: 'All Integrations',
+    description: 'Choose from hundreds of integrated platforms.',
     href: '#',
     image: '/integration/integration01.svg',
     isWide: true,
@@ -111,18 +112,21 @@ const INTEGRATIONS_ITEMS = [
   {
     key: 'stripe',
     title: 'Stripe',
+    description: '#1 Charge Back Solution For Stripe Merchants',
     href: '#',
     image: '/integration/integration02.avif',
   },
   {
     key: 'shopify',
     title: 'Shopify',
+    description: 'Powing 30k+ Shopify Merchants',
     href: '#',
     image: '/integration/integration03.svg',
   },
   {
     key: 'woocommerce',
     title: 'WooCommerce',
+    description: 'Native WooCommerce Integration',
     href: '#',
     image: '/integration/integration04.svg',
   },
@@ -224,7 +228,7 @@ function CustomersDropdown() {
               <img
                 src={item.image}
                 alt={'brand' in item ? item.brand : item.title}
-                className="w-full h-full object-contain object-bottom opacity-100 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+                className="w-full h-full object-contain object-center opacity-100 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
               />
             </div>
 
@@ -257,24 +261,11 @@ function CustomersDropdown() {
                       </span>
                     </div>
                   )}
-                  {/* <div className="mt-auto">
-                    {'stat' in item && (
-                      <div className="mb-1">
-                        <span className="text-[42px] font-bold text-white leading-none">
-                          {item.stat}
-                        </span>
-                        {'statSuffix' in item && item.statSuffix && (
-                          <span className="text-[20px] font-semibold text-zinc-300 ml-1">{item.statSuffix}</span>
-                        )}
-                      </div>
-                    )}
-                    {'statLabel' in item && (
-                      <p className="text-[12px] text-zinc-400 leading-snug mb-3">{item.statLabel}</p>
-                    )}
+                  <div className="mt-auto self-end">
                     {'category' in item && (
                       <span className="text-[10px] text-zinc-500 uppercase tracking-widest">{item.category}</span>
                     )}
-                  </div> */}
+                  </div>
                 </>
               )}
             </div>
@@ -297,7 +288,7 @@ function IntegrationsDropdown() {
       {banner && (
         <a
           href={banner.href}
-          className="relative flex-1 h-[350px] rounded-[20px] bg-black/80 hover:bg-[#1A1A1A] hover:transition-all hover:duration-300 overflow-hidden group hover:border-white/10 transition-colors flex flex-col shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
+          className="relative w-3/5 h-[350px] rounded-[20px] bg-black/80 hover:bg-[#1A1A1A] hover:transition-all hover:duration-300 overflow-hidden group hover:border-white/10 transition-colors flex flex-col shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
         >
           <div className="absolute inset-0 z-0 flex items-center justify-center">
             <img
@@ -308,12 +299,15 @@ function IntegrationsDropdown() {
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#111111] via-[rgba(17,17,17,0.6)] to-transparent z-0 h-32 pointer-events-none" />
           <div className="relative z-10 p-5 flex flex-col h-full">
-            <span className="text-[17px] font-semibold text-white group-hover:text-blue-400 transition-colors">
-              {banner.title}
+            <span className="text-lg font-semibold text-white">
+              {banner?.title}
+            </span>
+            <span className="w-1/3 text-lg font-semibold text-gray-400 mt-2">
+              {banner?.description}
             </span>
             <div className="mt-auto self-end">
               <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
-                EXPLORE
+                LEARN MORE
               </span>
             </div>
           </div>
@@ -326,20 +320,24 @@ function IntegrationsDropdown() {
           <a
             key={item.key}
             href={item.href}
-            className="relative flex-1 rounded-[20px] bg-black/80 hover:bg-[#1A1A1A] hover:transition-all hover:duration-300 overflow-hidden group hover:border-white/10 transition-colors flex flex-col justify-center shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
+            className="relative flex-1 rounded-[20px] bg-black/80 hover:bg-[#1A1A1A] hover:transition-all hover:duration-300 overflow-hidden group transition-colors flex flex-col justify-center shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
           >
-            <div className="absolute inset-0 z-0 flex items-center justify-center">
+            <div className="absolute inset-0 z-0 flex items-end justify-end">
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+                className="w-full h-full object-cover object-left grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-[#111111] via-[#111111]/70 to-transparent z-0 pointer-events-none" />
-            <div className="relative z-10 px-5 flex items-center h-full">
-              <span className="text-[17px] font-semibold text-white group-hover:text-blue-400 transition-colors">
+            <div className="relative z-10 px-5 h-full flex flex-col justify-center">
+              <p className="text-lg font-semibold text-white">
                 {item.title}
-              </span>
+              </p>
+              {/* description */}
+              <p className="text-sm font-semibold text-gray-400 mt-1">
+                {item.description}
+              </p>
             </div>
           </a>
         ))}
