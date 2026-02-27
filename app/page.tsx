@@ -1,5 +1,6 @@
+import IntegrationsSection from './components/integrations/demo-integrationSection';
 import { Navbar } from './components/navbar/Navbar';
-import { IntegrationsSection } from './components/integrations/IntegrationsSection';
+// import { IntegrationsSection } from './components/integrations/IntegrationsSection';
 
 export default function Home() {
   return (

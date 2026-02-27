@@ -353,23 +353,6 @@ function IntegrationsDropdown() {
   );
 }
 
-// ─── Simple Column Dropdown ─────────────────────────────────────────────────────
-
-function SimpleDropdown({ items }: { items: { title: string; href: string }[] }) {
-  return (
-    <div className="w-full p-4 grid grid-cols-2 lg:grid-cols-3 gap-2">
-      {items.map((item) => (
-        <a
-          key={item.title}
-          href={item.href}
-          className="px-4 py-3 rounded-xl text-[14px] font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
-        >
-          {item.title}
-        </a>
-      ))}
-    </div>
-  );
-}
 
 // ─── Resources Dropdown ─────────────────────────────────────────────────────────
 
@@ -445,6 +428,70 @@ function ResourcesDropdown() {
   );
 }
 
+// ─── Company Dropdown ─────────────────────────────────────────────────────────────
+
+function CompanyDropdown() {
+  return (
+    <div className="flex pb-3 gap-3 w-full h-[350px]">
+      {/* Left wide card */}
+      <a
+        href="#"
+        className="relative flex-[2] rounded-[18px] bg-[#111111] overflow-hidden group hover:bg-[#181818] transition-colors flex flex-col p-6 shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
+      >
+        <div className="absolute inset-[40px]">
+          <img
+            src="/company/company01.svg"
+            alt="Who We Are"
+            className="w-full h-full object-cover object-center opacity-100 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#111111]/80 via-[#111111]/40 to-transparent z-0 h-32 pointer-events-none" />
+        <div className="relative z-10 flex flex-col gap-2 max-w-[200px]">
+          <span className="text-[17px] font-semibold text-white group-hover:text-blue-400 transition-colors">Who We Are</span>
+          <p className="text-base text-zinc-400 leading-snug">The story behind the Chargeflow.</p>
+        </div>
+        <div className="mt-auto self-end">
+          <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
+            LEARN MORE
+          </span>
+        </div>
+      </a>
+
+      {/* Right 2x2 grid */}
+      <div className="flex-[1.6] grid grid-cols-2 grid-rows-2 gap-3">
+        {[
+          { title: 'Brand', href: '#', image: '/company/company02.svg' },
+          { title: 'Careers', href: '#', image: '/company/company03.svg', badge: "We're Hiring!" },
+          { title: 'Become a Partner', href: '#', image: '/company/company04.svg' },
+          { title: 'Contact Us', href: '#', image: '/company/company05.svg' },
+        ].map((item) => (
+          <a
+            key={item.title}
+            href={item.href}
+            className="relative rounded-[18px] bg-[#111111] overflow-hidden group hover:bg-[#181818] transition-colors flex flex-col p-5 shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]"
+          >
+            <div className="absolute inset-0 flex items-end justify-end">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover opacity-100 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+              />
+            </div>
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="text-[15px] font-semibold text-white group-hover:text-blue-400 transition-colors">{item.title}</span>
+              {item.badge && (
+                <span className="bg-[#2A2B36] text-[#869CED] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  {item.badge}
+                </span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Dropdown Wrapper ───────────────────────────────────────────────────────────
 
 function DropdownContent({ dropdownKey }: { dropdownKey: string }) {
@@ -453,7 +500,7 @@ function DropdownContent({ dropdownKey }: { dropdownKey: string }) {
     case 'customers': return <CustomersDropdown />;
     case 'integrations': return <IntegrationsDropdown />;
     case 'resources': return <ResourcesDropdown />;
-    case 'company': return <SimpleDropdown items={COMPANY_ITEMS} />;
+    case 'company': return <CompanyDropdown />;
     default: return null;
   }
 }
