@@ -560,7 +560,7 @@ function AnnouncementHeader({ isNavHovered }: { isNavHovered: boolean | null }) 
 
 // ─── Logo ───────────────────────────────────────────────────────────────────────
 
-function ChargeflowLogo() {
+function ChargeflowLogo({ isScrolled, navHovered }: { isScrolled: boolean, navHovered: boolean | null }) {
   return (
     <a href="#" className="flex items-center gap-2 cursor-pointer group flex-shrink-0">
       <div className="w-7 h-7 flex items-center justify-center shadow-[0_0_12px_rgba(30,90,241,0.5)] group-hover:text-gray-400 transition-all duration-300">
@@ -568,7 +568,7 @@ function ChargeflowLogo() {
           <path fillRule="evenodd" clipRule="evenodd" d="M20.4591 23.996L16.4118 18.3721C16.4118 18.3721 24.1707 12.0345 26.791 6.16874C26.7723 6.14897 17.7054 10.7632 17.7054 10.7632L14.0061 5.62295C20.772 0.983474 24.7214 1.69848 25.7767 3.16527L30.1387 9.22647C31.7551 11.4726 26.029 19.6752 20.4587 23.996H20.4591ZM9.95881 -0.000976563L14.0061 5.62295C14.0061 5.62295 6.24723 11.9605 3.62693 17.8263C3.64561 17.846 12.7126 13.2319 12.7126 13.2319L16.4118 18.3721C9.64591 23.0115 5.69657 22.2965 4.64125 20.8297L0.278806 14.7685C-1.33764 12.5224 4.38893 4.31985 9.95881 -0.000976563Z" fill="currentColor"></path>
         </svg>
       </div>
-      <span className="font-bold text-white text-2xl tracking-tight group-hover:text-gray-400 transition-all duration-300">chargeflow</span>
+      <span className={`font-bold text-white text-2xl tracking-tight group-hover:text-gray-400 transition-all duration-300 ${isScrolled || navHovered ? 'hidden' : ''}`}>chargeflow</span>
     </a>
   );
 }
@@ -643,7 +643,7 @@ export function Navbar() {
   `}
         >
           {/* Logo */}
-          <ChargeflowLogo />
+          <ChargeflowLogo isScrolled={isScrolled} navHovered={navHovered} />
 
           {/* Desktop Nav */}
           <nav className={`hidden lg:flex items-center gap-0.5 backdrop-blur-3xl rounded-full py-1.5 px-4 shadow-2xl ${isScrolled || navHovered ? '' : 'border border-white/10 bg-[#161616]/80 '}`}>
