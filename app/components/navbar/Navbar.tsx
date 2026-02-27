@@ -132,6 +132,13 @@ const INTEGRATIONS_ITEMS = [
   },
 ];
 
+const RESOURCES_CARD_ITEMS = [
+  { title: 'Blog', href: '#', image: '/resources/resources01.svg' },
+  { title: 'Reports', href: '#', image: '/resources/resources02.svg' },
+  { title: 'Podcast', href: '#', image: '/resources/resources03.svg' },
+  { title: 'Webinars', href: '#', image: '/resources/resources04.svg' },
+];
+
 const RESOURCES_ITEMS = [
   { title: 'Blog', href: '#' },
   { title: 'Webinars', href: '#' },
@@ -364,6 +371,80 @@ function SimpleDropdown({ items }: { items: { title: string; href: string }[] })
   );
 }
 
+// ─── Resources Dropdown ─────────────────────────────────────────────────────────
+
+function ResourcesDropdown() {
+  return (
+    <div className="flex pb-3 gap-3 w-full">
+      {/* Left: 4 cards */}
+      {RESOURCES_CARD_ITEMS.map((item) => (
+        <a
+          key={item.title}
+          href={item.href}
+          className="relative flex-1 h-[350px] rounded-[18px] bg-[#111111] overflow-hidden group hover:bg-[#181818] transition-colors flex flex-col"
+        >
+          {/* SVG image centered */}
+          <div className="absolute inset-0 bottom-[-100px] right-[-130px]">
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-full h-full object-contain opacity-100 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+            />
+          </div>
+          {/* Title top-left */}
+          <div className="relative z-10 p-4">
+            <span className="text-[15px] font-semibold text-white">{item.title}</span>
+          </div>
+        </a>
+      ))}
+
+      {/* Right panel */}
+      <div className="flex flex-col gap-3 w-[220px] flex-shrink-0 cursor-pointer">
+        {/* ROI Calculator */}
+        <div className="h-1/2 bg-linear-to-b from-black/80 via-black/80 to-white/10 rounded-[18px] p-4 flex flex-col justify-between gap-3 backdrop-blur-md shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]">
+          <span className="text-[15px] font-semibold text-white">ROI Calculator</span>
+          <div className="flex items-center rounded-lg bg-[#1a1a1a] border border-white/8 overflow-hidden">
+            <input
+              type="text"
+              defaultValue="1,020"
+              className="flex-1 bg-transparent text-white text-[13px] px-3 py-2 outline-none min-w-0 hover:text-blue-700 cursor-pointer"
+              readOnly
+            />
+            <span className="text-[10px] font-bold text-zinc-400 pr-3 tracking-widest">HOURS</span>
+          </div>
+          <div className="flex items-center rounded-lg bg-[#1a1a1a] border border-white/8 overflow-hidden">
+            <input
+              type="text"
+              defaultValue="$7,500"
+              className="flex-1 bg-transparent text-white text-[13px] px-3 py-2 outline-none min-w-0 hover:text-blue-700 cursor-pointer"
+              readOnly
+            />
+            <span className="text-[10px] font-bold text-zinc-400 pr-3 tracking-widest">USD</span>
+          </div>
+        </div>
+
+        {/* Reason Codes */}
+        <div className="h-1/2 bg-linear-to-b from-black/80 via-black/80 to-white/10 rounded-[18px] p-4 flex flex-col justify-around gap-3 backdrop-blur-md shadow-[0_4px_14px_0_rgba(0,0,0,0.05)]">
+          <span className="text-[15px] font-semibold text-white">Reason Codes</span>
+          <div className="flex items-center rounded-lg bg-[#1a1a1a] border border-white/8 overflow-hidden">
+            <input
+              type="text"
+              placeholder="Enter Code: 12.7"
+              className="flex-1 bg-transparent text-zinc-400 text-[12px] px-3 py-2 outline-none placeholder-zinc-500 min-w-0 hover:text-blue-700 cursor-pointer"
+            />
+            <button className="pr-3 text-zinc-400 hover:text-white transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Dropdown Wrapper ───────────────────────────────────────────────────────────
 
 function DropdownContent({ dropdownKey }: { dropdownKey: string }) {
@@ -371,7 +452,7 @@ function DropdownContent({ dropdownKey }: { dropdownKey: string }) {
     case 'product': return <ProductDropdown />;
     case 'customers': return <CustomersDropdown />;
     case 'integrations': return <IntegrationsDropdown />;
-    case 'resources': return <SimpleDropdown items={RESOURCES_ITEMS} />;
+    case 'resources': return <ResourcesDropdown />;
     case 'company': return <SimpleDropdown items={COMPANY_ITEMS} />;
     default: return null;
   }
