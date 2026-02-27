@@ -525,14 +525,14 @@ function DropdownContent({ dropdownKey }: { dropdownKey: string }) {
 
 // ─── Announcement Banner ────────────────────────────────────────────────────────
 
-function AnnouncementHeader() {
+function AnnouncementHeader({ isNavHovered }: { isNavHovered: boolean | null }) {
   const [visible, setVisible] = useState(true);
   const marqueeGreenText = "ANNOUNCING OUR $35M SERIES A FUNDING";
   const marqueeWhiteText = "TO TAKE DOWN FRIENDLY FRAUD - READ MORE"
 
   if (!visible) return null;
   return (
-    <div className="relative overflow-hidden bg-slate-950 pt-3">
+    <div className={`${isNavHovered ? 'scale-65 transition-all duration-300' : ''} relative overflow-hidden bg-slate-950 pt-3`}>
       <div className="flex animate-scroll whitespace-nowrap gap-8">
         {[0, 1, 2, 3].map((i) => (
           <>
@@ -584,6 +584,7 @@ export function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [hovered, setHovered] = useState<string | null>(null)
+  const [navHovered, setNavHovered] = useState<boolean | null>(null)
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsScrolled(latest > 20);
@@ -602,10 +603,12 @@ export function Navbar() {
   const handleMouseEnter = (key: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     setActiveDropdown(key);
+    setNavHovered(true)
   };
 
   const handleMouseLeave = () => {
     closeTimer.current = setTimeout(() => setActiveDropdown(null), 120);
+    setNavHovered(false)
   };
 
   const bannerHeight = hasBanner ? 36 : 0;
@@ -613,25 +616,27 @@ export function Navbar() {
   return (
     <>
       {/* Announcement Banner */}
-      <AnnouncementHeader />
+      <AnnouncementHeader isNavHovered={navHovered} />
 
       {/* Main Nav */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 280, damping: 28, delay: 0.1 }}
-        style={isScrolled ? { top: 0 } : { top: bannerHeight + 12 }}
+        style={
+          isScrolled ? { top: 0 } : { top: bannerHeight }
+        }
         className="fixed left-1/2 -translate-x-1/2 z-50 container mx-auto"
       >
         <motion.div
           animate={{
-            scale: isScrolled ? 0.90 : 1,
+            scale: isScrolled || navHovered ? 0.80 : 1,
           }}
           transition={{ duration: 0.3 }}
           className={`
     flex items-center justify-between
     px-5 py-3 rounded-full
-    ${isScrolled
+    ${isScrolled || navHovered
               ? 'bg-[#0a0a0a]/85 backdrop-blur-2xl border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.6)]'
               : 'bg-transparent border-transparent'
             }
@@ -641,7 +646,7 @@ export function Navbar() {
           <ChargeflowLogo />
 
           {/* Desktop Nav */}
-          <nav className={`hidden lg:flex items-center gap-0.5 backdrop-blur-md rounded-full px-4 py-1.5 shadow-2xl ${isScrolled ? '' : 'border border-white/10 bg-[#161616]/80'}`}>
+          <nav className={`hidden lg:flex items-center gap-0.5 backdrop-blur-3xl rounded-full py-1.5 px-4 shadow-2xl ${isScrolled || navHovered ? '' : 'border border-white/10 bg-[#161616]/80 '}`}>
             {NAV_LINKS?.map((link) => (
               <div
                 key={link?.name}
@@ -756,7 +761,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/40 backdrop-blur-[6px] z-40 pointer-events-none"
+            className="fixed top-[80px] inset-0 bg-black/40 backdrop-blur-[6px] z-40 pointer-events-none"
           />
         )}
       </AnimatePresence>
