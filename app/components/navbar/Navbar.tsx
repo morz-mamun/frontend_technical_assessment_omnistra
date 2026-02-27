@@ -165,6 +165,32 @@ const NAV_LINKS: NavLink[] = [
   { name: 'Company', hasDropdown: true, dropdownKey: 'company' },
 ];
 
+// ─── Button Component ─────────────────────────────────────────────────────────────
+
+function LearnMoreButton() {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <span
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative overflow-hidden opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0"
+    >
+      LEARN MORE
+      <BorderBeam
+        active={hovered}
+        size={40}
+        borderWidth={2}
+        className="from-transparent via-gray-400 to-transparent"
+        transition={{
+          type: "spring",
+          stiffness: 30,
+          damping: 20,
+        }}
+      />
+    </span>
+  );
+}
+
 // ─── Product Dropdown ───────────────────────────────────────────────────────────
 
 function ProductDropdown() {
@@ -206,9 +232,7 @@ function ProductDropdown() {
             </p>
 
             <div className="mt-auto self-end">
-              <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
-                LEARN MORE
-              </span>
+              <LearnMoreButton />
             </div>
           </div>
         </a>
@@ -251,9 +275,7 @@ function CustomersDropdown() {
                     {(item as typeof CUSTOMERS_ITEMS[0]).title}
                   </span>
                   <div className="mt-auto self-end">
-                    <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
-                      LEARN MORE
-                    </span>
+                    <LearnMoreButton />
                   </div>
                 </>
               ) : (
@@ -313,9 +335,7 @@ function IntegrationsDropdown() {
               {banner?.description}
             </span>
             <div className="mt-auto self-end">
-              <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
-                LEARN MORE
-              </span>
+              <LearnMoreButton />
             </div>
           </div>
         </a>
@@ -451,9 +471,7 @@ function CompanyDropdown() {
           <p className="text-base text-zinc-400 leading-snug">The story behind the Chargeflow.</p>
         </div>
         <div className="mt-auto self-end">
-          <span className="opacity-0 group-hover:opacity-100 bg-[#2A2A2A]/80 text-white text-[11px] font-bold px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
-            LEARN MORE
-          </span>
+          <LearnMoreButton />
         </div>
       </a>
 
