@@ -637,7 +637,7 @@ export function Navbar() {
     flex items-center justify-between
     px-5 py-3 rounded-full
     ${isScrolled || navHovered
-              ? 'bg-[#0a0a0a]/85 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.6)]'
+              ? 'bg-[#00000066] backdrop-blur-[15px] backdrop-filter shadow-[0_8px_40px_rgba(0,0,0,0.6)]'
               : 'bg-transparent'
             }
   `}
@@ -645,12 +645,12 @@ export function Navbar() {
           {/* Logo */}
           <ChargeflowLogo isScrolled={isScrolled} navHovered={navHovered} />
 
-          <div style={isScrolled || navHovered ? { border: "none" } : {
+          <div style={isScrolled || navHovered ? { border: "none", background: "none" } : {
             padding: "1px",
             borderRadius: "99px",
             background: "linear-gradient(to right, #1a1a1a 50%, #2e2e2e 100%, #666 70%, #999 100%)",
           }}>
-            <div className={`${isScrolled || navHovered ? 'bg-black' : 'bg-[#1A1A1A]'} rounded-[99px]`}>
+            <div className={`${isScrolled || navHovered ? 'bg-transparent backdrop-blur-[15px] backdrop-filter' : 'bg-[#1A1A1A]'} rounded-[99px]`}>
               {/* Desktop Nav */}
               <nav className={`hidden lg:flex items-center gap-0.5 backdrop-blur-3xl rounded-full shadow-2xl`}>
                 {NAV_LINKS?.map((link) => (
