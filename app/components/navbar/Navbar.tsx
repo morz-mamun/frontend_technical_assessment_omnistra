@@ -585,6 +585,14 @@ export function Navbar() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [hovered, setHovered] = useState<string | null>(null)
   const [navHovered, setNavHovered] = useState<boolean | null>(null)
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsScrolled(latest > 20);
@@ -630,7 +638,7 @@ export function Navbar() {
       >
         <motion.div
           animate={{
-            scale: isScrolled || navHovered ? 0.80 : 1,
+            scale: isScrolled || navHovered ? (isMobile ? 0.98 : 0.80) : 1,
           }}
           transition={{ duration: 0.3 }}
           className={`
@@ -779,103 +787,131 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            initial={{ opacity: 0, y: '-100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '-100%' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-40 bg-[#060608]/97 backdrop-blur-3xl"
             style={{ paddingTop: bannerHeight + 72 }}
           >
             <div className="h-full overflow-y-auto px-5 pb-10">
+
+              <div className="flex items-center justify-between mt-2 mb-6">
+                <a href="#" className="flex items-center gap-2 text-white text-[13px] font-bold tracking-widest hover:text-gray-300 transition-colors ml-4">
+                  SIGN IN <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+                <a href="#" className="flex items-center gap-2 bg-[#2D3EC3] text-white px-5 py-2.5 rounded-full text-[13px] font-bold tracking-widest hover:bg-blue-700 transition-colors">
+                  SCHEDULE A DEMO <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
               <div className="flex flex-col">
-                {NAV_LINKS.map((link) => (
-                  <div key={link.name} className="border-b border-white/[0.07]">
-                    <button
-                      className="w-full text-left py-4 text-[15px] font-semibold text-white tracking-widest flex items-center justify-between"
-                      onClick={() =>
-                        link.hasDropdown
-                          ? setMobileExpanded(mobileExpanded === link.dropdownKey ? null : link.dropdownKey ?? null)
-                          : undefined
-                      }
-                    >
-                      {link.name.toUpperCase()}
-                      {link.hasDropdown && (
-                        <motion.svg
-                          animate={{ rotate: mobileExpanded === link.dropdownKey ? 90 : 0 }}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          className="text-zinc-400"
-                        >
-                          <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </motion.svg>
-                      )}
-                    </button>
-
-                    <AnimatePresence>
-                      {link.hasDropdown && mobileExpanded === link.dropdownKey && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.22, ease: 'easeInOut' }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pb-3 pl-2 flex flex-col gap-0.5">
-                            {link.dropdownKey === 'product' && PRODUCT_ITEMS.map((item) => (
-                              <a
-                                key={item.title}
-                                href={item.href}
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors group"
-                              >
-                                <span className="text-[13px] font-medium text-zinc-300 group-hover:text-white transition-colors">{item.title}</span>
-                                {item.badge && (
-                                  <span className={item.badgeColor}>{item.badge}</span>
-                                )}
-                              </a>
-                            ))}
-                            {link.dropdownKey === 'customers' && CUSTOMERS_ITEMS.map(i => (
-                              <a
-                                key={i.key}
-                                href={i.href}
-                                className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors"
-                              >
-                                {'brand' in i ? i.brand : i.title}
-                              </a>
-                            ))}
-                            {link.dropdownKey === 'integrations' && INTEGRATIONS_ITEMS.map(i => (
-                              <a key={i.title} href={i.href} className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">{i.title}</a>
-                            ))}
-                            {link.dropdownKey === 'resources' && RESOURCES_ITEMS.map(i => (
-                              <a key={i.title} href={i.href} className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">{i.title}</a>
-                            ))}
-                            {link.dropdownKey === 'company' && COMPANY_ITEMS.map(i => (
-                              <a key={i.title} href={i.href} className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">{i.title}</a>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                <div className="flex flex-col w-full">
+                  <div className="flex items-center w-full opacity-30 py-4">
+                    <div className="w-1.5 h-1.5 rotate-45 bg-[#7b87a0]" />
+                    <div className="flex-1 border-t-2 border-dashed border-[#7b87a0] mx-2" />
+                    <div className="w-1.5 h-1.5 rotate-45 bg-[#7b87a0]" />
                   </div>
-                ))}
+
+                  {NAV_LINKS.map((link) => (
+                    <div key={link.name} className="flex flex-col w-full">
+                      <button
+                        className="w-full text-left py-2 text-[14px] font-bold text-zinc-300 tracking-wider flex items-center justify-between hover:text-white transition-colors"
+                        onClick={() =>
+                          link.hasDropdown
+                            ? setMobileExpanded(mobileExpanded === link.dropdownKey ? null : link.dropdownKey ?? null)
+                            : undefined
+                        }
+                      >
+                        {link.name.toUpperCase()}
+                        {link.hasDropdown && (
+                          <motion.svg
+                            animate={{ rotate: mobileExpanded === link.dropdownKey ? 180 : 0 }}
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            className="text-zinc-400"
+                          >
+                            <path d="M19 9l-7 7-7-7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </motion.svg>
+                        )}
+                      </button>
+
+                      <AnimatePresence>
+                        {link.hasDropdown && mobileExpanded === link.dropdownKey && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.22, ease: 'easeInOut' }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pb-3 pt-2 pl-2 flex flex-col gap-1">
+                              {link.dropdownKey === 'product' && PRODUCT_ITEMS.map((item) => (
+                                <a
+                                  key={item.title}
+                                  href={item.href}
+                                  className="relative flex flex-col justify-center min-h-[140px] rounded-[20px] bg-[#1a1a1b] overflow-hidden group border border-white/5 shadow-sm mt-3 first:mt-1 transition-all p-5"
+                                >
+                                  <div className="absolute inset-0 z-0 flex items-center justify-end right-0">
+                                    {item.image && (
+                                      <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        className="h-[120%] w-[120%] object-cover object-right opacity-30 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 ease-out"
+                                        style={{ maskImage: 'linear-gradient(to left, black 30%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to left, black 30%, transparent 100%)' }}
+                                      />
+                                    )}
+                                  </div>
+                                  <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1b] via-[#1a1a1b]/95 to-transparent z-0 pointer-events-none" />
+
+                                  <div className="relative z-10 w-full md:w-3/5 flex flex-col pt-2">
+                                    <div className="flex items-center gap-3 mb-2.5">
+                                      <span className="text-[17px] font-bold text-white tracking-wide group-hover:text-blue-400 transition-colors">{item.title}</span>
+                                      {item.badge && (
+                                        <span className={item.badgeColor}>{item.badge}</span>
+                                      )}
+                                    </div>
+                                    <p className="text-[14px] font-medium text-zinc-400 leading-snug">
+                                      {item.description}
+                                    </p>
+                                  </div>
+                                </a>
+                              ))}
+                              {link.dropdownKey === 'customers' && CUSTOMERS_ITEMS.map(i => (
+                                <a
+                                  key={i.key}
+                                  href={i.href}
+                                  className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors"
+                                >
+                                  {'brand' in i ? i.brand : i.title}
+                                </a>
+                              ))}
+                              {link.dropdownKey === 'integrations' && INTEGRATIONS_ITEMS.map(i => (
+                                <a key={i.title} href={i.href} className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">{i.title}</a>
+                              ))}
+                              {link.dropdownKey === 'resources' && RESOURCES_ITEMS.map(i => (
+                                <a key={i.title} href={i.href} className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">{i.title}</a>
+                              ))}
+                              {link.dropdownKey === 'company' && COMPANY_ITEMS.map(i => (
+                                <a key={i.title} href={i.href} className="px-3 py-2.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors">{i.title}</a>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      <div className="flex items-center w-full opacity-30 py-4">
+                        <div className="w-1.5 h-1.5 rotate-45 bg-[#7b87a0]" />
+                        <div className="flex-1 border-t-2 border-dashed border-[#7b87a0] mx-2" />
+                        <div className="w-1.5 h-1.5 rotate-45 bg-[#7b87a0]" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Mobile CTAs */}
-              <div className="mt-8 flex flex-col gap-3">
-                <a
-                  href="#"
-                  className="w-full bg-[#1E5AF1] text-white py-4 rounded-2xl text-[13px] font-bold tracking-widest text-center block"
-                >
-                  SCHEDULE A DEMO
-                </a>
-                <a
-                  href="#"
-                  className="w-full text-white py-4 rounded-2xl text-[13px] font-bold tracking-widest text-center block border border-white/15 hover:bg-white/5 transition-colors"
-                >
-                  SIGN IN →
-                </a>
-              </div>
             </div>
           </motion.div>
         )}
