@@ -532,7 +532,7 @@ function AnnouncementHeader({ isNavHovered }: { isNavHovered: boolean | null }) 
 
   if (!visible) return null;
   return (
-    <div className={`${isNavHovered ? 'scale-65 transition-all duration-300' : ''} relative overflow-hidden bg-slate-950 pt-3`}>
+    <div className={`${isNavHovered ? 'scale-65 transition-all duration-300' : ''} relative overflow-hidden bg-slate-950 pt-3 z-[1000]`}>
       <div className="flex animate-scroll whitespace-nowrap gap-8">
         {[0, 1, 2, 3].map((i) => (
           <>
