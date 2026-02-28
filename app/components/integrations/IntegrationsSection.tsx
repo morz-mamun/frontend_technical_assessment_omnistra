@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
     motion,
     useScroll,
@@ -21,17 +21,17 @@ const NODES = [
                 NICE<sup className="text-[9px] bg-black text-white px-0.5 rounded-full ml-0.5">®</sup>
             </span>
         ),
-        x: 10, y: 10, size: 96,
+        x: 10, y: 10, size: 96, mobileSize: 52,
     },
     {
         id: "salesforce",
         icon: <Cloud strokeWidth={1} size={44} className="text-[#00A1E0] fill-[#00A1E0]" />,
-        x: 18, y: 50, size: 88,
+        x: 18, y: 50, size: 88, mobileSize: 48,
     },
     {
         id: "p",
         icon: <span className="font-extrabold text-[#F38622] text-4xl italic">P</span>,
-        x: 12, y: 82, size: 88,
+        x: 12, y: 82, size: 88, mobileSize: 48,
     },
     {
         id: "e",
@@ -40,17 +40,17 @@ const NODES = [
                 e
             </div>
         ),
-        x: 25, y: 28, size: 80,
+        x: 25, y: 28, size: 80, mobileSize: 44,
     },
     {
         id: "share",
         icon: <Share2 strokeWidth={1} size={38} className="text-[#6588A6]" />,
-        x: 38, y: 12, size: 88,
+        x: 38, y: 12, size: 88, mobileSize: 48,
     },
     {
         id: "cloud2",
         icon: <Cloud strokeWidth={1.5} size={30} className="text-[#F15D22]" />,
-        x: 63, y: 10, size: 88,
+        x: 63, y: 10, size: 88, mobileSize: 48,
     },
     {
         id: "dots",
@@ -61,22 +61,22 @@ const NODES = [
                 ))}
             </div>
         ),
-        x: 85, y: 8, size: 88,
+        x: 85, y: 8, size: 88, mobileSize: 48,
     },
     {
         id: "blue",
         icon: <div className="rounded-full bg-[#0055A5] w-11 h-11" />,
-        x: 82, y: 32, size: 88,
+        x: 82, y: 32, size: 88, mobileSize: 48,
     },
     {
         id: "fiserv",
         icon: <div className="rounded-full bg-[#FF6A00] w-16 h-16" />,
-        x: 50, y: 88, size: 88,
+        x: 50, y: 88, size: 88, mobileSize: 48,
     },
     {
         id: "refresh",
         icon: <RefreshCw strokeWidth={1.5} size={38} className="text-[#FF5C35]" />,
-        x: 83, y: 80, size: 88,
+        x: 83, y: 80, size: 88, mobileSize: 48,
     },
 ] as const;
 
@@ -85,10 +85,13 @@ const NODES = [
 function IntegrationNode({
     node,
     smooth,
+    isMobile,
 }: {
     node: (typeof NODES)[number];
     smooth: MotionValue<number>;
+    isMobile: boolean;
 }) {
+    const cardSize = isMobile ? node.mobileSize : node.size;
     const offsetX = 50 - node.x;
     const offsetY = 50 - node.y;
 
@@ -107,15 +110,17 @@ function IntegrationNode({
                 position: "absolute",
                 left: `${node.x}%`,
                 top: `${node.y}%`,
-                width: node.size,
-                height: node.size,
-                marginLeft: -(node.size / 2),
-                marginTop: -(node.size / 2),
+                width: cardSize,
+                height: cardSize,
+                marginLeft: -(cardSize / 2),
+                marginTop: -(cardSize / 2),
                 x, y, scale, opacity,
             }}
-            className="flex items-center justify-center bg-white rounded-2xl shadow-lg border border-[#E8EEF8]"
+            className="flex items-center justify-center bg-white rounded-2xl shadow-lg border border-[#E8EEF8] overflow-hidden"
         >
-            {node.icon}
+            <div className={isMobile ? "scale-[0.6]" : ""}>
+                {node.icon}
+            </div>
         </motion.div>
     );
 }
@@ -124,6 +129,14 @@ function IntegrationNode({
 
 export default function IntegrationsSection() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, []);
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -195,7 +208,7 @@ export default function IntegrationsSection() {
                 {/* Nodes */}
                 <div className="absolute inset-0 z-50 pointer-events-none">
                     {NODES?.map((node) => (
-                        <IntegrationNode key={node.id} node={node} smooth={smooth} />
+                        <IntegrationNode key={node.id} node={node} smooth={smooth} isMobile={isMobile} />
                     ))}
                 </div>
 

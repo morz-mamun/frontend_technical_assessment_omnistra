@@ -532,7 +532,7 @@ function AnnouncementHeader({ isNavHovered }: { isNavHovered: boolean | null }) 
 
   if (!visible) return null;
   return (
-    <div className={`${isNavHovered ? 'scale-65 transition-all duration-300' : ''} relative overflow-hidden bg-slate-950 pt-3 z-[1000]`}>
+    <div className={`${isNavHovered ? 'xl:scale-65 lg:scale-75 md:scale-90 transition-all duration-300' : ''} relative overflow-hidden bg-slate-950 pt-3 z-[1000]`}>
       <div className="flex animate-scroll whitespace-nowrap gap-8">
         {[0, 1, 2, 3].map((i) => (
           <>
@@ -568,7 +568,7 @@ function ChargeflowLogo({ isScrolled, navHovered }: { isScrolled: boolean, navHo
           <path fillRule="evenodd" clipRule="evenodd" d="M20.4591 23.996L16.4118 18.3721C16.4118 18.3721 24.1707 12.0345 26.791 6.16874C26.7723 6.14897 17.7054 10.7632 17.7054 10.7632L14.0061 5.62295C20.772 0.983474 24.7214 1.69848 25.7767 3.16527L30.1387 9.22647C31.7551 11.4726 26.029 19.6752 20.4587 23.996H20.4591ZM9.95881 -0.000976563L14.0061 5.62295C14.0061 5.62295 6.24723 11.9605 3.62693 17.8263C3.64561 17.846 12.7126 13.2319 12.7126 13.2319L16.4118 18.3721C9.64591 23.0115 5.69657 22.2965 4.64125 20.8297L0.278806 14.7685C-1.33764 12.5224 4.38893 4.31985 9.95881 -0.000976563Z" fill="currentColor"></path>
         </svg>
       </div>
-      <span className={`font-bold text-white text-xl md:text-2xl tracking-tight group-hover:text-gray-400 transition-all duration-300 ${isScrolled || navHovered ? 'hidden' : ''}`}>chargeflow</span>
+      <span className={`font-bold text-white text-xl md:text-lg lg:text-2xl tracking-tight group-hover:text-gray-400 transition-all duration-300 ${isScrolled || navHovered ? 'hidden' : ''}`}>chargeflow</span>
     </a>
   );
 }
@@ -660,7 +660,7 @@ export function Navbar() {
           }}>
             <div className={`${isScrolled || navHovered ? 'bg-transparent backdrop-blur-[15px] backdrop-filter' : 'bg-[#1A1A1A]'} rounded-[99px]`}>
               {/* Desktop Nav */}
-              <nav className={`hidden lg:flex items-center gap-0.5 backdrop-blur-3xl rounded-full shadow-2xl`}>
+              <nav className={`hidden md:flex items-center gap-0.5 backdrop-blur-3xl rounded-full shadow-2xl`}>
                 {NAV_LINKS?.map((link) => (
                   <div
                     key={link?.name}
@@ -669,7 +669,7 @@ export function Navbar() {
                     onMouseLeave={link?.hasDropdown ? handleMouseLeave : undefined}
                   >
                     <button
-                      className={`relative text-sm font-semibold tracking-wider transition-colors duration-200 flex items-center gap-1 px-3.5 py-2 rounded-full cursor-pointer
+                      className={`relative text-[10px] md:text-[8px] lg:text-[13px] font-semibold tracking-wider transition-colors duration-200 flex items-center lg:gap-1 md:gap-0 gap-1 px-2 lg:px-3 py-2 rounded-full cursor-pointer
                     ${activeDropdown === link?.dropdownKey
                           ? 'text-white'
                           : 'text-[#a8b0c0] hover:text-white'
@@ -686,13 +686,13 @@ export function Navbar() {
 
 
           {/* Right CTAs */}
-          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+          <div className="hidden md:flex items-center gap-2 lg:gap-3 flex-shrink-0">
             <Button onMouseEnter={() => setHovered("SIGN IN")}
               onMouseLeave={() => setHovered(null)}
-              className="relative overflow-hidden rounded-full">
+              className="relative overflow-hidden rounded-full lg:text-base text-xs">
               SIGN IN
               {/* arrow icon */}
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="lg:w-4 lg:h-4 w-2 h-2" />
               <BorderBeam
                 active={hovered === "SIGN IN"}
                 size={40}
@@ -708,10 +708,10 @@ export function Navbar() {
             </Button>
             <Button onMouseEnter={() => setHovered("SIGN UP")}
               onMouseLeave={() => setHovered(null)}
-              className="relative overflow-hidden rounded-full bg-blue-700 hover:bg-blue-900">
+              className="relative overflow-hidden rounded-full bg-blue-700 hover:bg-blue-900 lg:text-base text-xs">
               SIGN UP
               {/* arrow icon */}
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="lg:w-4 lg:h-4 w-2 h-2" />
               <BorderBeam
                 active={hovered === "SIGN UP"}
                 size={40}
@@ -728,7 +728,7 @@ export function Navbar() {
           </div>
           {/* Mobile Toggle */}
           <button
-            className="lg:hidden relative w-9 h-9 flex flex-col items-center justify-center gap-1.5 text-white"
+            className="md:hidden relative w-9 h-9 flex flex-col items-center justify-center gap-1.5 text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
