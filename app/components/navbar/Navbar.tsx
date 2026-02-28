@@ -637,35 +637,45 @@ export function Navbar() {
     flex items-center justify-between
     px-5 py-3 rounded-full
     ${isScrolled || navHovered
-              ? 'bg-[#0a0a0a]/85 backdrop-blur-2xl border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.6)]'
-              : 'bg-transparent border-transparent'
+              ? 'bg-[#0a0a0a]/85 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.6)]'
+              : 'bg-transparent'
             }
   `}
         >
           {/* Logo */}
           <ChargeflowLogo isScrolled={isScrolled} navHovered={navHovered} />
 
-          {/* Desktop Nav */}
-          <nav className={`hidden lg:flex items-center gap-0.5 backdrop-blur-3xl rounded-full py-1.5 px-4 shadow-2xl ${isScrolled || navHovered ? '' : 'border border-white/10 bg-[#161616]/80 '}`}>
-            {NAV_LINKS?.map((link) => (
-              <div
-                key={link?.name}
-                className="relative"
-                onMouseEnter={() => link?.hasDropdown && link?.dropdownKey ? handleMouseEnter(link?.dropdownKey) : undefined}
-                onMouseLeave={link?.hasDropdown ? handleMouseLeave : undefined}
-              >
-                <button
-                  className={`relative text-sm font-semibold tracking-wider transition-colors duration-200 flex items-center gap-1 px-3.5 py-2 rounded-full cursor-pointer
+          <div style={{
+            padding: "1px",
+            borderRadius: "full",
+            background: "linear-gradient(to right, #1a1a1a 50%, #2e2e2e 100%, #666 70%, #999 100%)",
+          }}>
+            <div className="bg-[#1A1A1A]/80 rounded-full">
+              {/* Desktop Nav */}
+              <nav className={`hidden lg:flex items-center gap-0.5 backdrop-blur-3xl rounded-full shadow-2xl`}>
+                {NAV_LINKS?.map((link) => (
+                  <div
+                    key={link?.name}
+                    className="relative"
+                    onMouseEnter={() => link?.hasDropdown && link?.dropdownKey ? handleMouseEnter(link?.dropdownKey) : undefined}
+                    onMouseLeave={link?.hasDropdown ? handleMouseLeave : undefined}
+                  >
+                    <button
+                      className={`relative text-sm font-semibold tracking-wider transition-colors duration-200 flex items-center gap-1 px-3.5 py-2 rounded-full cursor-pointer
                     ${activeDropdown === link?.dropdownKey
-                      ? 'text-white'
-                      : 'text-[#a8b0c0] hover:text-white'
-                    }`}
-                >
-                  {link?.name?.toUpperCase()}
-                </button>
-              </div>
-            ))}
-          </nav>
+                          ? 'text-white'
+                          : 'text-[#a8b0c0] hover:text-white'
+                        }`}
+                    >
+                      {link?.name?.toUpperCase()}
+                    </button>
+                  </div>
+                ))}
+              </nav>
+
+            </div>
+          </div>
+
 
           {/* Right CTAs */}
           <div className="flex items-center gap-3 flex-shrink-0">
