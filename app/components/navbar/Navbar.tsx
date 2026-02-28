@@ -526,31 +526,29 @@ function DropdownContent({ dropdownKey }: { dropdownKey: string }) {
 // ─── Announcement Banner ────────────────────────────────────────────────────────
 
 function AnnouncementHeader({ isNavHovered }: { isNavHovered: boolean | null }) {
-  const [visible, setVisible] = useState(true);
+  const visible = true;
   const marqueeGreenText = "ANNOUNCING OUR $35M SERIES A FUNDING";
   const marqueeWhiteText = "TO TAKE DOWN FRIENDLY FRAUD - READ MORE"
 
   if (!visible) return null;
   return (
     <div className={`${isNavHovered ? 'xl:scale-65 lg:scale-75 md:scale-90 transition-all duration-300' : ''} relative overflow-hidden bg-slate-950 pt-3 z-[1000]`}>
-      <div className="flex animate-scroll whitespace-nowrap gap-8">
+      <div className="flex animate-scroll whitespace-nowrap gap-4">
         {[0, 1, 2, 3].map((i) => (
-          <>
-            <div key={i} className="flex items-center gap-2 text-white text-sm font-medium">
-              <span className='text-[#C3F967]'>{marqueeGreenText}</span><span className='text-white'>{marqueeWhiteText}</span>
+          <div key={i} className='flex items-center gap-4'>
+            <div className="text-white text-sm font-medium flex items-center gap-4">
+              <p className='text-[#C3F967]'>{marqueeGreenText}</p><p className='text-white'>{marqueeWhiteText}</p>
             </div>
             {/* logo */}
-            <div>
-              <div className="w-5 h-5 flex items-center justify-center shadow-[0_0_12px_rgba(30,90,241,0.5)] group-hover:text-gray-400 transition-all duration-300">
-                <svg width="100%" height="100%" viewBox="0 0 31 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M20.4591 23.996L16.4118 18.3721C16.4118 18.3721 24.1707 12.0345 26.791 6.16874C26.7723 6.14897 17.7054 10.7632 17.7054 10.7632L14.0061 5.62295C20.772 0.983474 24.7214 1.69848 25.7767 3.16527L30.1387 9.22647C31.7551 11.4726 26.029 19.6752 20.4587 23.996H20.4591ZM9.95881 -0.000976563L14.0061 5.62295C14.0061 5.62295 6.24723 11.9605 3.62693 17.8263C3.64561 17.846 12.7126 13.2319 12.7126 13.2319L16.4118 18.3721C9.64591 23.0115 5.69657 22.2965 4.64125 20.8297L0.278806 14.7685C-1.33764 12.5224 4.38893 4.31985 9.95881 -0.000976563Z" fill="currentColor"></path>
-                </svg>
-              </div>
+            <div className="w-5 h-5 flex items-center justify-center shadow-[0_0_12px_rgba(30,90,241,0.5)] group-hover:text-gray-400 transition-all duration-300">
+              <svg width="100%" height="100%" viewBox="0 0 31 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" clipRule="evenodd" d="M20.4591 23.996L16.4118 18.3721C16.4118 18.3721 24.1707 12.0345 26.791 6.16874C26.7723 6.14897 17.7054 10.7632 17.7054 10.7632L14.0061 5.62295C20.772 0.983474 24.7214 1.69848 25.7767 3.16527L30.1387 9.22647C31.7551 11.4726 26.029 19.6752 20.4587 23.996H20.4591ZM9.95881 -0.000976563L14.0061 5.62295C14.0061 5.62295 6.24723 11.9605 3.62693 17.8263C3.64561 17.846 12.7126 13.2319 12.7126 13.2319L16.4118 18.3721C9.64591 23.0115 5.69657 22.2965 4.64125 20.8297L0.278806 14.7685C-1.33764 12.5224 4.38893 4.31985 9.95881 -0.000976563Z" fill="currentColor"></path>
+              </svg>
             </div>
             <div>
               <Zap className="w-5 h-5 text-[#C3F967] flex-shrink-0" />
             </div>
-          </>
+          </div>
 
         ))}
       </div>
@@ -660,7 +658,7 @@ export function Navbar() {
           }}>
             <div className={`${isScrolled || navHovered ? 'bg-transparent backdrop-blur-[15px] backdrop-filter' : 'bg-[#1A1A1A]'} rounded-[99px]`}>
               {/* Desktop Nav */}
-              <nav className={`hidden md:flex items-center gap-0.5 backdrop-blur-3xl rounded-full shadow-2xl`}>
+              <nav className={`hidden md:flex items-center gap-0.5 p-1 backdrop-blur-3xl rounded-full shadow-2xl`}>
                 {NAV_LINKS?.map((link) => (
                   <div
                     key={link?.name}
@@ -669,10 +667,10 @@ export function Navbar() {
                     onMouseLeave={link?.hasDropdown ? handleMouseLeave : undefined}
                   >
                     <button
-                      className={`relative text-[10px] md:text-[8px] lg:text-[13px] font-semibold tracking-wider transition-colors duration-200 flex items-center lg:gap-1 md:gap-0 gap-1 px-2 lg:px-3 py-2 rounded-full cursor-pointer
+                      className={`relative text-[10px] md:text-[8px] lg:text-[13px] xl:text-sm font-semibold tracking-wider transition-colors duration-200 flex items-center lg:gap-1 md:gap-0 gap-1 px-2 lg:px-3 py-2 rounded-full cursor-pointer
                     ${activeDropdown === link?.dropdownKey
                           ? 'text-white'
-                          : 'text-[#a8b0c0] hover:text-white'
+                          : 'text-white font-semibold'
                         }`}
                     >
                       {link?.name?.toUpperCase()}
